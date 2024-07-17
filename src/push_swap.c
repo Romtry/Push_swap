@@ -6,7 +6,7 @@
 /*   By: rothiery <rothiery@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 09:56:25 by rothiery          #+#    #+#             */
-/*   Updated: 2024/07/17 12:30:54 by rothiery         ###   ########.fr       */
+/*   Updated: 2024/07/17 14:05:59 by rothiery         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	main(int argc, char **argv)
 	}
 	if (is_sorted(stack_a) == 1)
 		sorting(stack_a, stack_b);
-	printus(stack_a, stack_b);
+	is_sorted1(stack_a);
 	free_all(stack_a);
 }
 

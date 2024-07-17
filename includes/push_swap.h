@@ -6,7 +6,7 @@
 /*   By: rothiery <rothiery@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:26:44 by rothiery          #+#    #+#             */
-/*   Updated: 2024/07/16 15:47:58 by rothiery         ###   ########.fr       */
+/*   Updated: 2024/07/17 14:08:24 by rothiery         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ typedef struct s_list
 	struct s_list *next;
 } t_list;
 
+int		is_sorted1(t_list *a);
+int		is_sortedb(t_list *b);
+int		l_median(t_list *a, int len);
 int		lst_high(t_list *a, int h_f);
 void	algo(t_list *a, t_list *b, int len);
 void	printus(t_list *stack_a, t_list *stack_b);

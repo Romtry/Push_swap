@@ -6,7 +6,7 @@
 /*   By: rothiery <rothiery@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:20:02 by rothiery          #+#    #+#             */
-/*   Updated: 2024/07/16 16:13:11 by rothiery         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:58:32 by rothiery         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,28 @@ int	lst_high(t_list *a, int h_f)
 		cmp2 = a;
 	}
 	return (i2);
+}
+
+int		l_median(t_list *a, int len)
+{
+	t_list	*cmp;
+	t_list	*cmp2;
+	int	i;
+
+	cmp = a;
+	i = 0;
+	while (i != ((len / 2)))
+	{
+		cmp2 = a;
+		i = 0;
+		while (i <= ((len / 2)) && cmp2)
+		{
+			if (cmp->content > cmp2->content)
+				i++;
+			cmp2 = cmp2->next;
+		}
+		if (i != len / 2)
+			cmp = cmp->next;
+	}
+	return(cmp->content);
 }

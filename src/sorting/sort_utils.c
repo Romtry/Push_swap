@@ -6,7 +6,7 @@
 /*   By: rothiery <rothiery@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 09:42:53 by rothiery          #+#    #+#             */
-/*   Updated: 2024/07/16 14:58:39 by rothiery         ###   ########.fr       */
+/*   Updated: 2024/07/17 14:10:32 by rothiery         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@ int	is_sorted1(t_list *a)
 		if (a->content > a->next->content)
 			return (1);
 		a = a->next;
+	}
+	write(1, "OK\n", 3);
+	return (0);
+}
+
+int	is_sortedb(t_list *b)
+{
+	while (b->next)
+	{
+		if (b->content < b->next->content)
+			return (1);
+		b = b->next;
 	}
 	write(1, "OK\n", 3);
 	return (0);

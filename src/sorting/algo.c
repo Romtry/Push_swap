@@ -6,7 +6,7 @@
 /*   By: rothiery <rothiery@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 12:43:03 by rothiery          #+#    #+#             */
-/*   Updated: 2024/07/17 12:44:25 by rothiery         ###   ########.fr       */
+/*   Updated: 2024/07/17 14:10:58 by rothiery         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,52 +27,46 @@ int	is_nsorted(t_list *a, int n)
 	return (0);
 }
 
-int		l_median(t_list *a, int len)
-{
-	t_list	*cmp;
-	t_list	*cmp2;
-	int	i;
-
-	cmp = a;
-	i = 0;
-	while (i != ((len / 2)))
-	{
-		cmp2 = a;
-		i = 0;
-		while (i <= ((len / 2)) && cmp2)
-		{
-			if (cmp->content > cmp2->content)
-				i++;
-			cmp2 = cmp2->next;
-		}
-		if (i != len / 2)
-			cmp = cmp->next;
-	}
-	return(cmp->content);
-}
-
-void	l_bsort(t_list *a, t_list *b)
+void	l_bsort(t_list **a, t_list **b)
 {
 	int	i;
 	int cmp;
 
 	i = 0;
-	cmp = a->content;
-	while (b && b->content > cmp)
+	cmp = (*a)->content;
+	while (*b && (*b)->content > cmp)
 	{
-		pa(&a, &b);
-		sa(&a);
+		pa(a, b);
+		sa(a);
 		i++;
 	}
 	while (i >= 0)
 	{
-		pb(&a, &b);
+		pb(a, b);
 		i--;
 	}
-	rra(&a);
-	write(1, "1\n", 2);
-	printus(a, b);
-	write(1, "1\n", 2);
+	if (lst_high(*a, 0) != lst_len(*a))
+		rra(a);
+}
+
+void	a_2sort(t_list **a, t_list **b, int high_f)
+{
+	if (!(*b))
+	{
+		pb(a, b);
+		if (high_f > 0 && lst_high(*a, 0) != lst_len(*a))
+			rra(a);
+	}
+	else if ((*a)->content < (*b)->content)
+	{
+		l_bsort(a, b);
+	}
+	else if ((*a)->content > (*b)->content)
+	{
+		pb(a, b);
+		if (high_f > 0 && lst_high(*a, 0) != lst_len(*a))
+			rra(a);
+	}
 }
 
 void	algo(t_list *a, t_list *b, int len)
@@ -91,40 +85,24 @@ void	algo(t_list *a, t_list *b, int len)
 		rra(&a);
 		rra(&a);
 	}
-	while (is_sorted(a) != 0 && i++ < 4)
+	while ((is_sorted(a) != 0 || b) && i++ < 12)
 	{
-		if (a->content > a->next->content)
+		if (is_sorted(a) == 0 && b && is_sortedb(b) == 0 && a->content > b->content)
+		{
+			while (b)
+				pa(&a, &b);
+		}
+		else if (a->content > a->next->content)
 			sa(&a);
-		else if (lst_high(a, high_f) == 2)
+		else if (lst_high(a, high_f) == 2 && lst_high(a, 0) != lst_len(a))
 		{
 			high_f++;
 			rra(&a);
 		}
-		else if (a->content < a->next->content && !b)
-		{
-			pb(&a, &b);
-			if (high_f > 0)
-				rra(&a);
-		}
-		else if (a->content < a->next->content && a->content < b->content)
-		{
-			l_bsort(a, b);
-			write(1, "2\n", 2);
-			printus(a, b);
-			write(1, "2\n", 2);
-		}
-		else if (a->content < a->next->content && a->content > b->content)
-		{
-			pb(&a, &b);
-			if (high_f > 0)
-				rra(&a);
-		}
-		else 
-		{
-			write(1, "else\n", 6);
-			printus(a, b);
+		else if (a->content < a->next->content)
+			a_2sort(&a, &b, high_f);
+		else
 			exit(0);
-		}
 		printus(a, b);
 	}
 }
